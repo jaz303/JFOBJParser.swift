@@ -42,7 +42,12 @@ parser.onUnknown = { (line) in
 	
 }
 
+// first pass - count entities in OBJ file
 let stats = parser.count()
+
+// now, allocate arrays or other data structures to hold model data
+
+// second pass - parse file into data structures
 reader.rewind()
 parser.parse()
 ```
