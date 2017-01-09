@@ -32,7 +32,6 @@ parser.onParameterSpaceVertex = { (u, v, w) in
 
 // count = number of vertices in face
 // arrays contain indexes into vertex, tex coord or vertex normal arrays
-// arrays are reused so may contain > count elements
 parser.onFace = { (count, vertices, vertexTextureCoords, vertexNormals) in
 	
 }

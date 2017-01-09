@@ -40,9 +40,10 @@ public class JFOBJParser<T: Sequence> where T.Iterator.Element == String {
     }
 
     public func parse() {
-        var fVertices = [Int](repeating: 0, count: 4),
-            fTextureCoords = [Int](repeating: 0, count: 4),
-            fVertexNormals = [Int](repeating: 0, count: 4)
+        var fVertices = [Int](), fTextureCoords = [Int](), fVertexNormals = [Int]()
+        fVertices.reserveCapacity(4)
+        fTextureCoords.reserveCapacity(4)
+        fVertexNormals.reserveCapacity(4)
 
         for line in source {
             let scanner = Scanner(string: line)
@@ -126,26 +127,32 @@ public class JFOBJParser<T: Sequence> where T.Iterator.Element == String {
                 var tmp: Int = 0, vertexCount: Int = 0
                 while !scanner.isAtEnd {
                     scanner.scanInt(&tmp)
-                    fVertices[vertexCount] = tmp
+                    fVertices.append(tmp)
                     if getChar(scanner) == "/" {
                         scanner.scanLocation += 1
                         if getChar(scanner) != "/" {
                             scanner.scanInt(&tmp)
-                            fTextureCoords[vertexCount] = tmp
+                            fTextureCoords.append(tmp)
                         } else {
-                            fTextureCoords[vertexCount] = -1
+                            fTextureCoords.append(-1)
                         }
                         if getChar(scanner) == "/" {
                             scanner.scanLocation += 1
                             scanner.scanInt(&tmp)
-                            fVertexNormals[vertexCount] = tmp
+                            fVertexNormals.append(tmp)
                         } else {
-                            fVertexNormals[vertexCount] = -1
+                            fVertexNormals.append(-1)
                         }
+                    } else {
+                        fTextureCoords.append(-1)
+                        fVertexNormals.append(-1)
                     }
                     vertexCount += 1
                 }
                 onFace(vertexCount, fVertices, fTextureCoords, fVertexNormals)
+                fVertices.removeAll()
+                fTextureCoords.removeAll()
+                fVertexNormals.removeAll()
             } else if line.hasPrefix("#") {
                 // comment, skip
             } else if !scanner.isAtEnd {
