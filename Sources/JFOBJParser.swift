@@ -3,11 +3,11 @@ import Foundation
 // https://en.wikipedia.org/wiki/Wavefront_.obj_file
 
 public struct JFOBJParserStats {
-    var numberOfVertices: Int = 0
-    var numberOfTextureCoords: Int = 0
-    var numberOfVertexNormals: Int = 0
-    var numberOfParameterSpaceVertices: Int = 0
-    var numberOfFaces: Int = 0
+    public var numberOfVertices: Int = 0
+    public var numberOfTextureCoords: Int = 0
+    public var numberOfVertexNormals: Int = 0
+    public var numberOfParameterSpaceVertices: Int = 0
+    public var numberOfFaces: Int = 0
 }
 
 public class JFOBJParser<T: Sequence> where T.Iterator.Element == String {
